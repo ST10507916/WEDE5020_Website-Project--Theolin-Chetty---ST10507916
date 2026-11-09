@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sibusisoelectricalplumbing.netlify.app/sitemap.xml

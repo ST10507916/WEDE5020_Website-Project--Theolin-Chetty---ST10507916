@@ -1,0 +1,16 @@
+# Netlify deploy configuration
+# WEDE5020 | Website Project | Part 3 | Theolin Chetty | ST10507916
+#
+# This project has no build step (plain HTML/CSS/JS), so `publish`
+# simply points at the project root where index.html, css/, js/ and
+# images/ all live. Security response headers live in the separate
+# `_headers` file alongside this one, which Netlify picks up
+# automatically on deploy.
+
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404

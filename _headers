@@ -1,0 +1,29 @@
+# Security headers applied to every page of the site by Netlify.
+# WEDE5020 Part 3 - "Implement security measures to protect your
+# website from attacks."
+
+/*
+  # Prevent the site being loaded inside a frame on another domain
+  # (clickjacking protection).
+  X-Frame-Options: SAMEORIGIN
+
+  # Stop browsers "sniffing" a file to a different MIME type than the
+  # one the server declared (helps block disguised-script attacks).
+  X-Content-Type-Options: nosniff
+
+  # Only send the origin (not the full URL/query string) as the
+  # Referer header when linking out to other sites.
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # Legacy cross-site-scripting filter switch for older browsers.
+  X-XSS-Protection: 1; mode=block
+
+  # Restrict which browser features this site is allowed to request.
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+
+  # Content Security Policy: only allow scripts/styles/images/fonts
+  # from this site itself, plus the specific third-party hosts the
+  # site actually uses (Leaflet for the interactive map on
+  # contact.html, OpenStreetMap for the map tile images, and Netlify
+  # itself for the AJAX form submissions).
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; img-src 'self' https://*.tile.openstreetmap.org data:; connect-src 'self'; font-src 'self'; frame-ancestors 'self'
