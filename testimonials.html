@@ -14,8 +14,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Testimonials | Sibusiso Electrical & Plumbing Services</title>
+  <title>Customer Testimonials | Sibusiso Electrical & Plumbing Services</title>
   <meta name="description" content="What customers say about Sibusiso Electrical & Plumbing Services - honest, punctual electrical and plumbing work across Johannesburg." />
+  <link rel="canonical" href="https://sibusisoelectricalplumbing.netlify.app/testimonials.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Customer Testimonials | Sibusiso Electrical & Plumbing" />
+  <meta property="og:description" content="Honest, punctual electrical and plumbing work across Johannesburg - see what customers say." />
+  <meta property="og:image" content="https://sibusisoelectricalplumbing.netlify.app/images/hero-photo.jpg" />
+  <meta property="og:url" content="https://sibusisoelectricalplumbing.netlify.app/testimonials.html" />
   <link rel="icon" type="image/svg+xml" href="images/logo.svg" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -61,71 +67,18 @@
       </div>
     </section>
 
+    <!-- ===================== TESTIMONIALS (dynamic: js/data.js + script.js) ===================== -->
     <section class="section">
       <div class="container">
-        <div class="grid grid--2">
+        <!-- Populated by script.js from the TESTIMONIALS array in js/data.js -->
+        <div class="grid grid--2" id="testimonials-list"></div>
 
-          <div class="testimonial-card">
-            <div class="stars" aria-label="Rated 5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <p class="testimonial-card__quote">"Sibusiso's team arrived within the hour when our geyser burst and had it fixed the same afternoon. Honest pricing and no mess left behind."</p>
-            <div class="testimonial-card__meta">
-              <div class="avatar" aria-hidden="true">TM</div>
-              <div>
-                <span class="testimonial-name">T. Mokoena</span>
-                <span class="testimonial-location">Randburg</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <div class="stars" aria-label="Rated 5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <p class="testimonial-card__quote">"We use Sibusiso Electrical for maintenance at our shop. Always punctual, always explains what they're doing before they do it."</p>
-            <div class="testimonial-card__meta">
-              <div class="avatar" aria-hidden="true">LV</div>
-              <div>
-                <span class="testimonial-name">L. van Wyk</span>
-                <span class="testimonial-location">Johannesburg CBD</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <div class="stars" aria-label="Rated 5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <p class="testimonial-card__quote">"Had our whole house rewired. Neat work, fair price, and they left the place cleaner than they found it."</p>
-            <div class="testimonial-card__meta">
-              <div class="avatar" aria-hidden="true">NK</div>
-              <div>
-                <span class="testimonial-name">N. Khumalo</span>
-                <span class="testimonial-location">Randburg</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <div class="stars" aria-label="Rated 4 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
-            <p class="testimonial-card__quote">"Called about a blocked drain expecting to wait days - they came out the same afternoon."</p>
-            <div class="testimonial-card__meta">
-              <div class="avatar" aria-hidden="true">SN</div>
-              <div>
-                <span class="testimonial-name">S. Naidoo</span>
-                <span class="testimonial-location">Roodepoort</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <div class="stars" aria-label="Rated 5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <p class="testimonial-card__quote">"Straightforward quote, no pressure, good communication throughout the job."</p>
-            <div class="testimonial-card__meta">
-              <div class="avatar" aria-hidden="true">PD</div>
-              <div>
-                <span class="testimonial-name">P. Dube</span>
-                <span class="testimonial-location">Fourways</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
+        <noscript>
+          <p class="form-hint">
+            JavaScript is disabled in your browser, so the testimonial list above can't load. Please
+            <a href="contact.html">contact us</a> for references.
+          </p>
+        </noscript>
       </div>
     </section>
 
@@ -178,6 +131,7 @@
     </div>
   </footer>
 
+  <script src="js/data.js" defer></script>
   <script src="js/script.js" defer></script>
 </body>
 </html>

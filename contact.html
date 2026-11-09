@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <!--
   Sibusiso Electrical & Plumbing Services - Contact
-  WEDE5020 | Website Project | Part 1 | Theolin Chetty | ST10507916
+  WEDE5020 | Website Project | Part 1-3 | Theolin Chetty | ST10507916
   Two locations are shown per the assignment brief (4.1): Head Office /
-  Workshop (Johannesburg CBD) and the Randburg Satellite Depot. Maps use
-  OpenStreetMap's free embed (no API key required).
+  Workshop (Johannesburg CBD) and the Randburg Satellite Depot.
+  Part 3: the two static OpenStreetMap iframes were replaced with one
+  interactive Leaflet.js map with clickable markers (js/script.js,
+  section 8), and the contact form now submits via Netlify Forms AJAX
+  with a compiled mailto: fallback (js/script.js, section 9).
 -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact Us | Sibusiso Electrical & Plumbing Services</title>
-  <meta name="description" content="Contact Sibusiso Electrical & Plumbing Services - Johannesburg CBD head office and Randburg depot, phone, email, and contact form." />
+  <title>Contact Us | Sibusiso Electrical & Plumbing Services, Johannesburg</title>
+  <meta name="description" content="Contact Sibusiso Electrical & Plumbing Services - Johannesburg CBD head office and Randburg depot, phone, email, interactive map and contact form." />
+  <link rel="canonical" href="https://sibusisoelectricalplumbing.netlify.app/contact.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Contact Sibusiso Electrical & Plumbing Services" />
+  <meta property="og:description" content="Johannesburg CBD head office and Randburg depot, phone, email, interactive map and contact form." />
+  <meta property="og:image" content="https://sibusisoelectricalplumbing.netlify.app/images/hero-photo.jpg" />
+  <meta property="og:url" content="https://sibusisoelectricalplumbing.netlify.app/contact.html" />
   <link rel="icon" type="image/svg+xml" href="images/logo.svg" />
   <link rel="stylesheet" href="css/style.css" />
+  <!-- Leaflet.js (interactive map library, Part 3 section 2.1) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 
@@ -107,12 +118,6 @@
               Sat: 08:00&ndash;13:00<br />
               Sun: Emergency call-outs only
             </p>
-            <iframe
-              class="map-frame"
-              title="Map showing the Johannesburg CBD head office location"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=28.03%2C-26.22%2C28.08%2C-26.18&amp;layer=mapnik&amp;marker=-26.2023%2C28.0436"
-              loading="lazy">
-            </iframe>
           </div>
 
           <div class="location-card">
@@ -125,15 +130,20 @@
               Mon&ndash;Fri: 08:00&ndash;16:00<br />
               (Stock &amp; collections point)
             </p>
-            <iframe
-              class="map-frame"
-              title="Map showing the Randburg satellite depot location"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=27.98%2C-26.11%2C28.03%2C-26.07&amp;layer=mapnik&amp;marker=-26.0939%2C28.0064"
-              loading="lazy">
-            </iframe>
           </div>
 
         </div>
+
+        <!-- Single interactive map covering both locations (Leaflet.js,
+             populated by script.js section 8). Falls back to the text
+             addresses above if JS or the map tiles fail to load. -->
+        <div id="map-locations" role="img" aria-label="Map showing the Johannesburg CBD head office and Randburg depot locations" style="margin-top:28px;"></div>
+        <noscript>
+          <p class="form-hint" style="margin-top:12px;">
+            JavaScript is disabled in your browser, so the interactive map above can't load. See the
+            addresses listed next to each location above.
+          </p>
+        </noscript>
       </div>
     </section>
 
@@ -144,7 +154,24 @@
           <h2>Send Us a Message</h2>
         </div>
         <div class="form-card">
-          <form novalidate data-validate>
+          <!--
+            Netlify Forms (Part 3 section 4 + 5): `data-netlify="true"`,
+            `name="contact"`, and the matching hidden `form-name` input let
+            Netlify's build-time bot detect and register this form from the
+            static HTML, so real submissions are captured and emailed to
+            the site owner even though there is no custom backend. The
+            `data-netlify-honeypot` field plus the visually hidden
+            "bot-field" input is a standard spam trap: real visitors never
+            see or fill it in, so if it arrives filled in, Netlify silently
+            discards the submission as spam. `data-validate` hooks this
+            form into the shared validation + AJAX submit logic in
+            js/script.js section 9.
+          -->
+          <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" novalidate data-validate data-submit-label="Send Message">
+            <input type="hidden" name="form-name" value="contact" />
+            <p class="visually-hidden">
+              <label>Don't fill this out if you're human: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+            </p>
 
             <div class="form-status" role="alert" aria-live="polite"></div>
 
@@ -161,12 +188,30 @@
             </div>
 
             <div class="form-row">
+              <label for="contact-type">Message Type <span class="required">*</span></label>
+              <select id="contact-type" name="contact-type" required>
+                <option value="">Select a type&hellip;</option>
+                <option value="General Enquiry">General Enquiry</option>
+                <option value="Feedback">Feedback</option>
+                <option value="Complaint">Complaint</option>
+                <option value="Media / Press">Media / Press</option>
+              </select>
+              <span class="error-text" id="contact-type-error">Please choose a message type.</span>
+            </div>
+
+            <div class="form-row">
               <label for="contact-message">Message <span class="required">*</span></label>
-              <textarea id="contact-message" name="contact-message" required placeholder="How can we help?"></textarea>
-              <span class="error-text" id="contact-message-error">Please enter a message.</span>
+              <textarea id="contact-message" name="contact-message" required minlength="10" placeholder="How can we help?"></textarea>
+              <span class="error-text" id="contact-message-error">Please enter a message (at least 10 characters).</span>
             </div>
 
             <button type="submit" class="btn btn--primary btn--block">Send Message</button>
+
+            <!-- Filled in and revealed by script.js once the form is submitted, per the brief's
+                 request that the compiled message also be sendable as an email directly. -->
+            <a href="#" id="contact-mailto-link" class="text-center" hidden style="display:block;">
+              Prefer your own email app? Click here to open this message in it instead.
+            </a>
           </form>
         </div>
       </div>
@@ -213,6 +258,9 @@
     </div>
   </footer>
 
+  <!-- Leaflet.js (interactive map library, Part 3 section 2.1) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+  <script src="js/data.js" defer></script>
   <script src="js/script.js" defer></script>
 </body>
 </html>

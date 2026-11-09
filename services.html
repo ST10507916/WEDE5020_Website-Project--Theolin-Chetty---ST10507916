@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <!--
   Sibusiso Electrical & Plumbing Services - Services
-  WEDE5020 | Website Project | Part 1 | Theolin Chetty | ST10507916
+  WEDE5020 | Website Project | Part 1-3 | Theolin Chetty | ST10507916
+  Part 3: service cards are rendered dynamically from js/data.js with a
+  category filter, a sort control, and an FAQ accordion (see js/script.js,
+  sections 4 and 7).
 -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Services | Sibusiso Electrical & Plumbing Services</title>
-  <meta name="description" content="Electrical and plumbing services across Johannesburg: fault finding, DB board upgrades, rewiring, geyser installation, blocked drains, leak detection and emergency call-outs." />
+  <title>Electrician & Plumber Services in Johannesburg | Sibusiso Electrical & Plumbing</title>
+  <meta name="description" content="Electrician and plumber services across Johannesburg: fault finding, DB board upgrades and COC, rewiring, geyser installation, blocked drains, leak detection and emergency call-outs. Filter by service type." />
+  <link rel="canonical" href="https://sibusisoelectricalplumbing.netlify.app/services.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Electrician & Plumber Services in Johannesburg" />
+  <meta property="og:description" content="Electrical and plumbing services across Johannesburg: fault finding, DB board upgrades, rewiring, geyser installation, blocked drains, leak detection and emergency call-outs." />
+  <meta property="og:image" content="https://sibusisoelectricalplumbing.netlify.app/images/hero-photo.jpg" />
+  <meta property="og:url" content="https://sibusisoelectricalplumbing.netlify.app/services.html" />
   <link rel="icon" type="image/svg+xml" href="images/logo.svg" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -54,75 +63,42 @@
       </div>
     </section>
 
-    <!-- ===================== ELECTRICAL SERVICES ===================== -->
+    <!-- ===================== SERVICES (dynamic: js/data.js + script.js) ===================== -->
     <section class="section">
       <div class="container">
         <div class="section-heading">
-          <img src="images/icon-electrical.svg" alt="" width="56" height="56" style="margin:0 auto 12px auto;" />
-          <h2>Electrical Services</h2>
+          <h2>Browse Our Services</h2>
+          <p>Filter by trade, or sort the list - rendered live from our service catalogue.</p>
         </div>
-        <div class="grid grid--3">
-          <article class="service-card">
-            <h3>Fault Finding &amp; Repairs</h3>
-            <p>Tripping breakers, power outages, and faulty circuits diagnosed and fixed.</p>
-          </article>
-          <article class="service-card">
-            <h3>DB Board Upgrades &amp; COC</h3>
-            <p>Compliant distribution board upgrades with a Certificate of Compliance.</p>
-          </article>
-          <article class="service-card">
-            <h3>Lighting &amp; Plug Points</h3>
-            <p>New points, replacements, and LED upgrades for homes and offices.</p>
-          </article>
-          <article class="service-card">
-            <h3>Geyser Electrical Connections</h3>
-            <p>Safe electrical connection for new or replacement geysers.</p>
-          </article>
-          <article class="service-card">
-            <h3>Home Rewiring</h3>
-            <p>Full or partial rewiring for older homes and renovations.</p>
-          </article>
-          <article class="service-card">
-            <h3>Small Business Maintenance</h3>
-            <p>Scheduled maintenance and call-out cover for shops and offices.</p>
-          </article>
-        </div>
-      </div>
-    </section>
 
-    <!-- ===================== PLUMBING SERVICES ===================== -->
-    <section class="section section--grey">
-      <div class="container">
-        <div class="section-heading">
-          <img src="images/icon-plumbing.svg" alt="" width="56" height="56" style="margin:0 auto 12px auto;" />
-          <h2>Plumbing Services</h2>
+        <div class="toolbar-row">
+          <div class="filter-bar service-filter-bar" role="group" aria-label="Filter services by category">
+            <button type="button" data-filter="all" class="is-active" aria-pressed="true">All Services</button>
+            <button type="button" data-filter="electrical" aria-pressed="false">Electrical</button>
+            <button type="button" data-filter="plumbing" aria-pressed="false">Plumbing</button>
+            <button type="button" data-filter="emergency" aria-pressed="false">Emergency</button>
+          </div>
+
+          <div>
+            <label for="service-sort" class="visually-hidden">Sort services</label>
+            <select id="service-sort" class="sort-select">
+              <option value="default">Sort: Default</option>
+              <option value="name-asc">Sort: Name (A-Z)</option>
+              <option value="category">Sort: Category</option>
+            </select>
+          </div>
         </div>
-        <div class="grid grid--3">
-          <article class="service-card">
-            <h3>Burst Pipe Repairs</h3>
-            <p>Rapid response to burst and leaking pipes, indoors or outdoors.</p>
-          </article>
-          <article class="service-card">
-            <h3>Geyser Installation &amp; Repair</h3>
-            <p>Supply, install, and repair geysers of all common sizes.</p>
-          </article>
-          <article class="service-card">
-            <h3>Blocked Drain Clearing</h3>
-            <p>Kitchen, bathroom, and outdoor drains cleared quickly and cleanly.</p>
-          </article>
-          <article class="service-card">
-            <h3>Tap &amp; Toilet Installations</h3>
-            <p>Replacements and new installations, fitted properly the first time.</p>
-          </article>
-          <article class="service-card">
-            <h3>Leak Detection</h3>
-            <p>Locating hidden leaks before they cause costly damage.</p>
-          </article>
-          <article class="service-card">
-            <h3>Bathroom &amp; Kitchen Renovations</h3>
-            <p>Full plumbing support for bathroom and kitchen renovation projects.</p>
-          </article>
-        </div>
+
+        <!-- Populated by script.js from the SERVICES array in js/data.js -->
+        <div class="grid grid--3" id="services-list"></div>
+
+        <noscript>
+          <p class="form-hint">
+            JavaScript is disabled in your browser, so the filterable service list above can't load.
+            Please call <a href="tel:+27835550142">083 555 0142</a> or use the
+            <a href="enquiry.html">enquiry form</a> to ask about a specific electrical or plumbing service.
+          </p>
+        </noscript>
       </div>
     </section>
 
@@ -149,6 +125,25 @@
         <h2>Areas We Service</h2>
         <p>Johannesburg CBD &middot; Randburg &middot; Sandton &middot; Roodepoort &middot; Fourways &middot; Johannesburg South &middot; Soweto</p>
         <p class="form-hint">Select areas - please confirm coverage for your suburb when you enquire.</p>
+      </div>
+    </section>
+
+    <!-- ===================== FAQ ACCORDION (dynamic: js/data.js + script.js) ===================== -->
+    <section class="section">
+      <div class="container" style="max-width:760px;">
+        <div class="section-heading">
+          <h2>Frequently Asked Questions</h2>
+        </div>
+
+        <!-- Populated by script.js from the FAQS array in js/data.js -->
+        <div id="faq-accordion"></div>
+
+        <noscript>
+          <p class="form-hint">
+            JavaScript is disabled in your browser, so the FAQ list above can't load. Please
+            <a href="contact.html">contact us</a> directly with any questions.
+          </p>
+        </noscript>
       </div>
     </section>
 
@@ -194,6 +189,7 @@
     </div>
   </footer>
 
+  <script src="js/data.js" defer></script>
   <script src="js/script.js" defer></script>
 </body>
 </html>

@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <!--
   Sibusiso Electrical & Plumbing Services - Gallery
-  WEDE5020 | Website Project | Part 1 | Theolin Chetty | ST10507916
+  WEDE5020 | Website Project | Part 1-3 | Theolin Chetty | ST10507916
   NOTE: This is an additional page beyond the assignment's required minimum
   of 5 pages (Home, About Us, Services, Enquiry, Contact) - proposed in
   Proposal 2, section 4 "Proposed Features and Functionality", and
   documented in README.md and the Website Project Proposal document.
+  Part 3: cards are rendered dynamically from js/data.js with a category
+  filter, a text search, and a lightbox for the full-size photo (see
+  js/script.js, section 5).
 -->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gallery | Sibusiso Electrical & Plumbing Services</title>
-  <meta name="description" content="Recent electrical and plumbing projects completed by Sibusiso Electrical & Plumbing Services across Johannesburg." />
+  <title>Project Gallery | Electrical & Plumbing Work in Johannesburg</title>
+  <meta name="description" content="Browse recent electrical and plumbing projects completed by Sibusiso Electrical & Plumbing Services across Johannesburg. Filter by trade or search by keyword." />
+  <link rel="canonical" href="https://sibusisoelectricalplumbing.netlify.app/gallery.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Project Gallery | Sibusiso Electrical & Plumbing Services" />
+  <meta property="og:description" content="Recent electrical and plumbing projects completed across Johannesburg." />
+  <meta property="og:image" content="https://sibusisoelectricalplumbing.netlify.app/images/gallery-db-board-upgrade.jpg" />
+  <meta property="og:url" content="https://sibusisoelectricalplumbing.netlify.app/gallery.html" />
   <link rel="icon" type="image/svg+xml" href="images/logo.svg" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -58,85 +67,47 @@
       </div>
     </section>
 
+    <!-- ===================== GALLERY (dynamic: js/data.js + script.js) ===================== -->
     <section class="section">
       <div class="container">
-        <div class="grid grid--3">
 
-          <article class="gallery-card">
-            <div class="gallery-card__media">
-              <img src="images/gallery-full-house-rewire.jpg" srcset="images/gallery-full-house-rewire-400w.jpg 400w, images/gallery-full-house-rewire.jpg 663w" sizes="(min-width: 700px) 33vw, 100vw" alt="Electrician running new conduit wiring during a full house rewire" />
-              <span class="tag">Electrical</span>
-            </div>
-            <div class="gallery-card__body">
-              <p class="location">Randburg</p>
-              <h3>Full House Rewire</h3>
-              <p>Complete rewire of a 1970s home, including a new DB board and Certificate of Compliance.</p>
-            </div>
-          </article>
+        <div class="toolbar-row">
+          <div class="filter-bar gallery-filter-bar" role="group" aria-label="Filter gallery by trade">
+            <button type="button" data-filter="all" class="is-active" aria-pressed="true">All Projects</button>
+            <button type="button" data-filter="electrical" aria-pressed="false">Electrical</button>
+            <button type="button" data-filter="plumbing" aria-pressed="false">Plumbing</button>
+          </div>
 
-          <article class="gallery-card">
-            <div class="gallery-card__media">
-              <img src="images/gallery-db-board-upgrade.jpg" srcset="images/gallery-db-board-upgrade-400w.jpg 400w, images/gallery-db-board-upgrade-800w.jpg 800w, images/gallery-db-board-upgrade.jpg 1330w" sizes="(min-width: 700px) 33vw, 100vw" alt="Electrician using a drill on a distribution board during an upgrade" />
-              <span class="tag">Electrical</span>
-            </div>
-            <div class="gallery-card__body">
-              <p class="location">Sandton</p>
-              <h3>DB Board Upgrade &amp; COC</h3>
-              <p>Upgraded an outdated distribution board to current safety standards.</p>
-            </div>
-          </article>
-
-          <article class="gallery-card">
-            <div class="gallery-card__media">
-              <img src="images/gallery-burst-geyser-repair.jpg" srcset="images/gallery-burst-geyser-repair-400w.jpg 400w, images/gallery-burst-geyser-repair-800w.jpg 800w, images/gallery-burst-geyser-repair.jpg 1503w" sizes="(min-width: 700px) 33vw, 100vw" alt="Plumber tightening a pipe fitting during an emergency geyser repair" />
-              <span class="tag tag--plumbing">Plumbing</span>
-            </div>
-            <div class="gallery-card__body">
-              <p class="location">Roodepoort</p>
-              <h3>Burst Geyser Pipe - Emergency Repair</h3>
-              <p>Same-day emergency repair after a burst geyser pipe flooded a ceiling.</p>
-            </div>
-          </article>
-
-          <article class="gallery-card">
-            <div class="gallery-card__media">
-              <img src="images/gallery-bathroom-renovation.jpg" srcset="images/gallery-bathroom-renovation-400w.jpg 400w, images/gallery-bathroom-renovation-800w.jpg 800w, images/gallery-bathroom-renovation.jpg 1512w" sizes="(min-width: 700px) 33vw, 100vw" alt="Plumber connecting pipework under a counter during a bathroom renovation" />
-              <span class="tag tag--plumbing">Plumbing</span>
-            </div>
-            <div class="gallery-card__body">
-              <p class="location">Johannesburg South</p>
-              <h3>Bathroom Plumbing Renovation</h3>
-              <p>Full plumbing renovation for a family bathroom remodel.</p>
-            </div>
-          </article>
-
-          <article class="gallery-card">
-            <div class="gallery-card__media">
-              <img src="images/gallery-commercial-maintenance.jpg" srcset="images/gallery-commercial-maintenance-320w.jpg 320w, images/gallery-commercial-maintenance.jpg 568w" sizes="(min-width: 700px) 33vw, 100vw" alt="Technician servicing wiring inside an electrical panel during commercial maintenance" />
-              <span class="tag">Electrical</span>
-            </div>
-            <div class="gallery-card__body">
-              <p class="location">Johannesburg CBD</p>
-              <h3>Commercial Electrical Maintenance</h3>
-              <p>Ongoing scheduled maintenance contract for a small retail unit.</p>
-            </div>
-          </article>
-
-          <article class="gallery-card">
-            <div class="gallery-card__media">
-              <img src="images/gallery-outdoor-tap-irrigation.jpg" srcset="images/gallery-outdoor-tap-irrigation-400w.jpg 400w, images/gallery-outdoor-tap-irrigation.jpg 751w" sizes="(min-width: 700px) 33vw, 100vw" alt="Outdoor PVC pipework installed along an exterior wall for a tap and irrigation project" />
-              <span class="tag tag--plumbing">Plumbing</span>
-            </div>
-            <div class="gallery-card__body">
-              <p class="location">Fourways</p>
-              <h3>Outdoor Tap &amp; Irrigation Installation</h3>
-              <p>New outdoor taps and irrigation point installation for a garden refit.</p>
-            </div>
-          </article>
-
+          <div>
+            <label for="gallery-search" class="visually-hidden">Search projects</label>
+            <input type="search" id="gallery-search" class="search-input" placeholder="Search by suburb, keyword..." />
+          </div>
         </div>
+
+        <p class="results-count" id="gallery-results-count" aria-live="polite">6 projects found</p>
+
+        <!-- Populated by script.js from the GALLERY_ITEMS array in js/data.js -->
+        <div class="grid grid--3" id="gallery-grid"></div>
+
+        <noscript>
+          <p class="form-hint">
+            JavaScript is disabled in your browser, so the filterable gallery above can't load.
+            Please <a href="contact.html">contact us</a> to ask about past projects in your area.
+          </p>
+        </noscript>
       </div>
     </section>
+
+    <!-- ===================== LIGHTBOX MODAL (filled in by script.js) ===================== -->
+    <div id="lightbox" aria-hidden="true">
+      <div class="lightbox-dialog" role="dialog" aria-modal="true" aria-label="Project photo viewer">
+        <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close photo viewer">&times;</button>
+        <button type="button" class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous photo">&#8249;</button>
+        <img id="lightbox-img" src="" alt="" />
+        <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next photo">&#8250;</button>
+        <p id="lightbox-caption"></p>
+      </div>
+    </div>
 
     <section class="cta-banner">
       <div class="container">
@@ -187,6 +158,7 @@
     </div>
   </footer>
 
+  <script src="js/data.js" defer></script>
   <script src="js/script.js" defer></script>
 </body>
 </html>
